@@ -1,932 +1,482 @@
 [
   {
-    "slug": "security-questionnaire-autofill",
-    "title": "Security Questionnaire Autofill for B2B SaaS",
-    "oneLiner": "Upload prior answers and instantly draft enterprise security questionnaires with citations.",
-    "category": "sales-ops",
-    "targetFounder": "Technical founder with NLP + workflow automation skills",
-    "problem": "Small SaaS teams lose enterprise deals because 200-question security forms consume founder time and legal review cycles.",
-    "solution": "A knowledge-base-assisted assistant that maps incoming questionnaires to historical approved answers, flags risky edits, and exports polished responses.",
-    "technicalComplexity": "medium",
-    "marketSize": "large",
-    "difficultyScore": 6,
-    "soloFeasibilityScore": 8,
-    "buildWindowMonths": "4-6",
-    "pricingRange": "$149-$499/month",
-    "mrrPotential": "$12k-$45k",
-    "tags": ["b2b", "security", "automation", "enterprise-sales"],
-    "marketResearch": {
-      "icp": "VC-backed SaaS teams with 5-80 employees selling to mid-market or enterprise buyers",
-      "urgency": "High once a team has 2+ security reviews per month",
-      "estMarketSize": "~35k global SaaS vendors with security reviews in pipeline",
-      "willingnessToPay": "Teams already spend on GRC tools but need lighter pre-sale workflow",
-      "existingBudgetLine": "Sales enablement, RevOps, or security compliance software",
-      "signalSources": [
-        "Hundreds of founder complaints on LinkedIn and RevGenius about spreadsheet fatigue",
-        "RFP response agencies charging $1k-$5k per questionnaire",
-        "G2 reviews for compliance tooling mentioning questionnaire pain"
-      ]
-    },
+    "slug": "agency-retainer-attrition-radar",
+    "title": "Agency Retainer Attrition Radar",
+    "oneLinePitch": "Predict which client retainers are likely to cancel in the next 60 days.",
+    "problem": "Small agencies lose revenue abruptly because churn signals are hidden across Slack, tickets, and billing usage.",
+    "audience": "Boutique marketing and software agencies with 10-80 active retainers",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 5,
+    "complexity": "Medium",
+    "soloFeasibility": 9,
+    "timeToMVPMonths": 4,
+    "difficultyScore": 49,
+    "pricingModel": "$149/mo for 50 clients, then usage tiers",
+    "validationSignals": [
+      "Agencies already pay for churn analytics in e-commerce but lack a retainer-focused product",
+      "Frequent founder posts asking how to prevent silent churn before QBRs",
+      "Low switching cost because most inputs come from existing APIs"
+    ],
     "competition": [
-      {
-        "name": "Loopio",
-        "pricing": "Enterprise annual contracts",
-        "weakness": "Too heavy for early-stage SaaS; long onboarding",
-        "opportunity": "Position as founder-friendly, live in one afternoon"
-      },
-      {
-        "name": "Whistic",
-        "pricing": "Mid-market and enterprise",
-        "weakness": "Security portal first, seller workflow second",
-        "opportunity": "Optimize for outbound sales teams and speed-to-first-answer"
-      },
-      {
-        "name": "Manual spreadsheet + Notion process",
-        "pricing": "Internal labor",
-        "weakness": "Error-prone, no consistency checks",
-        "opportunity": "Guarantee response quality and faster turnaround"
-      }
+      "Baremetrics for subscription metrics (not agency workflow aware)",
+      "Vitally for customer success (priced for larger B2B teams)",
+      "DIY spreadsheets maintained by ops managers"
+    ],
+    "goToMarket": [
+      "Launch with downloadable churn playbook in agency communities",
+      "Run a free churn-risk audit for first 25 design/dev agencies",
+      "Partner with agency bookkeeping firms for referral leads"
     ],
     "implementationPlan": [
-      {
-        "phase": "Data ingestion",
-        "timeline": "Week 1-2",
-        "outcome": "Import prior questionnaires, policy docs, and approved answer library"
-      },
-      {
-        "phase": "Answer drafting engine",
-        "timeline": "Week 3-6",
-        "outcome": "Generate suggested answers with confidence score and source references"
-      },
-      {
-        "phase": "Review workflow",
-        "timeline": "Week 7-9",
-        "outcome": "Approve, reject, or mark legal review required for each answer"
-      },
-      {
-        "phase": "Exports + analytics",
-        "timeline": "Week 10-12",
-        "outcome": "Export to buyer format and track questionnaire turnaround time"
-      }
+      "Integrate Stripe, HubSpot, ClickUp, and Slack sentiment events",
+      "Generate a weekly attrition score with explainable factors",
+      "Trigger account-specific save playbooks and reminder tasks"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Interview 20 SaaS account executives with active enterprise pipelines",
-        "Offer a concierge service where you answer one questionnaire manually in 48 hours",
-        "Measure willingness to pay by pre-selling a $299/month charter plan"
-      ],
-      "launchPlan": [
-        "Partner with boutique security consultants as referral channel",
-        "Publish turnaround benchmark report: manual vs assisted completion time",
-        "Run live teardown webinars of anonymized questionnaires"
-      ],
-      "hiddenRisks": [
-        "Customers may demand SOC2 evidence hosting beyond MVP scope",
-        "LLM hallucinations can create legal risk if not review-gated",
-        "Long enterprise procurement cycles can delay cash flow"
-      ],
-      "moatOpportunities": [
-        "Structured answer memory linked to policy citations",
-        "Domain-specific prompt templates by buyer vertical",
-        "Time-to-complete benchmark dataset for go-to-market teams"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "Redis", "Resend", "OpenAI embeddings"],
+    "risks": [
+      "Attribution quality drops if integrations are incomplete",
+      "Agencies with very low client count may churn from limited signal volume"
+    ],
+    "keywords": ["agency", "churn", "retainer", "client health", "analytics"]
   },
   {
-    "slug": "churn-interview-analyzer",
-    "title": "Churn Interview Analyzer for Stripe + HubSpot",
-    "oneLiner": "Turn cancellation notes, support tickets, and call transcripts into product roadmap priorities.",
-    "category": "product-analytics",
-    "targetFounder": "Solo founder comfortable with ETL and analytics UX",
-    "problem": "B2B founders get churn feedback from many channels but never synthesize it into concrete retention fixes.",
-    "solution": "A retention intelligence dashboard that clusters churn reasons, quantifies lost MRR, and suggests high-impact fixes.",
-    "technicalComplexity": "low",
-    "marketSize": "growing",
-    "difficultyScore": 4,
-    "soloFeasibilityScore": 9,
-    "buildWindowMonths": "3-4",
-    "pricingRange": "$79-$249/month",
-    "mrrPotential": "$8k-$30k",
-    "tags": ["churn", "analytics", "saas", "retention"],
-    "marketResearch": {
-      "icp": "Bootstrapped and seed-stage SaaS with $10k-$300k MRR",
-      "urgency": "High when monthly churn exceeds 3-5%",
-      "estMarketSize": "~60k subscription software businesses in this revenue band",
-      "willingnessToPay": "Retention tools have clear ROI tied to recovered revenue",
-      "existingBudgetLine": "Product analytics or customer success tooling",
-      "signalSources": [
-        "Frequent founder posts asking for churn survey templates",
-        "HubSpot and Intercom users exporting CSVs for manual analysis",
-        "Community advice threads recommending ad-hoc spreadsheets"
-      ]
-    },
+    "slug": "b2b-onboarding-friction-monitor",
+    "title": "B2B Onboarding Friction Monitor",
+    "oneLinePitch": "Find exactly where trial users stall during setup and recommend fixes.",
+    "problem": "Founders know conversion is weak but cannot pinpoint which onboarding step causes drop-off.",
+    "audience": "Early-stage B2B SaaS teams with self-serve trials",
+    "marketSize": "Large ($100M+)",
+    "competitionScore": 7,
+    "complexity": "Medium",
+    "soloFeasibility": 8,
+    "timeToMVPMonths": 5,
+    "difficultyScore": 56,
+    "pricingModel": "$99/mo starter, $299/mo growth",
+    "validationSignals": [
+      "Product-led growth teams consistently request setup funnel diagnostics",
+      "Current analytics tools show events but not decision-ready friction explanations",
+      "High willingness to pay because conversion improvements are immediately measurable"
+    ],
     "competition": [
-      {
-        "name": "Baremetrics cancellation insights",
-        "pricing": "$129+/month",
-        "weakness": "Limited cross-source qualitative synthesis",
-        "opportunity": "Merge ticket, call, and billing context into one timeline"
-      },
-      {
-        "name": "Vitally / CS suites",
-        "pricing": "Mid-market pricing",
-        "weakness": "Too broad for teams wanting churn-only tooling",
-        "opportunity": "Offer faster setup and opinionated retention workflows"
-      },
-      {
-        "name": "DIY Notion tracking",
-        "pricing": "Low hard cost",
-        "weakness": "No trend detection or weighted revenue impact",
-        "opportunity": "Automate insight extraction and prioritization"
-      }
+      "Mixpanel and Amplitude (powerful but analyst-heavy)",
+      "Heap (broad analytics, less focused on onboarding execution)",
+      "Userpilot for in-app guides with lighter diagnostic depth"
+    ],
+    "goToMarket": [
+      "Offer one-click onboarding health report for Segment users",
+      "Publish benchmark reports by SaaS category",
+      "Acquire first users through PLG founder newsletters"
     ],
     "implementationPlan": [
-      {
-        "phase": "Integrations",
-        "timeline": "Week 1-3",
-        "outcome": "Pull cancellation reasons from Stripe plus CRM and support notes"
-      },
-      {
-        "phase": "Reason clustering",
-        "timeline": "Week 4-6",
-        "outcome": "Group qualitative text into consistent churn themes"
-      },
-      {
-        "phase": "Revenue impact layer",
-        "timeline": "Week 7-8",
-        "outcome": "Attach lost MRR and account segment to each churn reason"
-      },
-      {
-        "phase": "Action board",
-        "timeline": "Week 9-10",
-        "outcome": "Generate retention sprint recommendations and experiment tracking"
-      }
+      "Capture event stream and map to onboarding milestones",
+      "Compute friction hotspots with cohort-specific drop-off reasons",
+      "Suggest UI copy and sequence experiments ranked by impact"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Recruit 10 founders from SaaS communities with public churn pain",
-        "Run manual churn-coding service for one month and track saved MRR",
-        "A/B price test: $79 dashboard-only vs $149 with monthly report"
-      ],
-      "launchPlan": [
-        "Publish anonymized churn benchmark by SaaS category",
-        "Ship one-click export to investor update format",
-        "Partner with fractional CS consultants"
-      ],
-      "hiddenRisks": [
-        "Weak data quality in cancellation notes",
-        "Small sample sizes can produce noisy recommendations",
-        "Founders may expect done-for-you retention strategy"
-      ],
-      "moatOpportunities": [
-        "Vertical churn reason taxonomy",
-        "Benchmark retention playbook outcomes",
-        "Historical churn-to-feature impact map"
-      ]
-    }
+    "stack": ["Next.js", "ClickHouse", "Kafka or webhooks", "OpenAI", "Plausible API"],
+    "risks": [
+      "Data quality depends on correct event naming",
+      "Needs clear privacy posture for user behavior analytics"
+    ],
+    "keywords": ["onboarding", "conversion", "product analytics", "PLG", "trials"]
   },
   {
-    "slug": "api-deprecation-radar",
-    "title": "API Deprecation Radar for SaaS Teams",
-    "oneLiner": "Monitor third-party API changelogs and alert engineering before breaking changes hit production.",
-    "category": "developer-tools",
-    "targetFounder": "Backend-heavy founder with DevOps reliability experience",
-    "problem": "Indie SaaS products break when upstream APIs silently deprecate fields, endpoints, or auth methods.",
-    "solution": "Continuously parse vendor docs/changelogs, diff schema snapshots, and map risk to your integration surface.",
-    "technicalComplexity": "medium",
-    "marketSize": "growing",
-    "difficultyScore": 7,
-    "soloFeasibilityScore": 7,
-    "buildWindowMonths": "4-6",
-    "pricingRange": "$99-$399/month",
-    "mrrPotential": "$10k-$35k",
-    "tags": ["api", "monitoring", "developer-tools", "integration"],
-    "marketResearch": {
-      "icp": "SaaS teams integrating 5+ third-party APIs",
-      "urgency": "Medium to high after one outage caused by API drift",
-      "estMarketSize": "Tens of thousands of integration-heavy products",
-      "willingnessToPay": "Comparable to error monitoring budgets",
-      "existingBudgetLine": "Engineering productivity / observability",
-      "signalSources": [
-        "Frequent Hacker News threads on API breaking changes",
-        "GitHub issue spikes after vendor API version updates",
-        "SRE teams building internal scripts to monitor docs"
-      ]
-    },
+    "slug": "support-ticket-deflection-planner",
+    "title": "Support Ticket Deflection Planner",
+    "oneLinePitch": "Turn top support tickets into prioritized product fixes and docs updates.",
+    "problem": "Small teams drown in repeated support tickets but lack a system to reduce recurring volume.",
+    "audience": "SaaS companies handling 500-5,000 support tickets per month",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 6,
+    "complexity": "Low",
+    "soloFeasibility": 10,
+    "timeToMVPMonths": 3,
+    "difficultyScore": 34,
+    "pricingModel": "$79/mo per support inbox",
+    "validationSignals": [
+      "Teams already manually classify top tickets in Notion",
+      "Head of support roles frequently asked to prove ticket reduction ROI",
+      "Existing AI chat tools focus on reply speed, not root-cause elimination"
+    ],
     "competition": [
-      {
-        "name": "Internal scripts",
-        "pricing": "Engineer time",
-        "weakness": "Not maintained, low coverage",
-        "opportunity": "Managed coverage and reliability alerts"
-      },
-      {
-        "name": "Postman monitors",
-        "pricing": "Usage-based",
-        "weakness": "Endpoint checks, not changelog risk modeling",
-        "opportunity": "Focus on version/deprecation intelligence"
-      },
-      {
-        "name": "No dedicated tool",
-        "pricing": "Outage cost",
-        "weakness": "Reactive, not proactive",
-        "opportunity": "Position as insurance against integration incidents"
-      }
+      "Intercom Fin and Zendesk AI bots",
+      "Gorgias automation rules",
+      "Internal docs projects without measurable impact tracking"
+    ],
+    "goToMarket": [
+      "Lead magnet: weekly ticket deflection scorecard template",
+      "Build direct integrations with Zendesk, Help Scout, and Intercom",
+      "Show case studies with tickets avoided per engineering hour"
     ],
     "implementationPlan": [
-      {
-        "phase": "Source connectors",
-        "timeline": "Week 1-3",
-        "outcome": "Connect changelog RSS, docs pages, OpenAPI specs"
-      },
-      {
-        "phase": "Diff + risk engine",
-        "timeline": "Week 4-7",
-        "outcome": "Detect breaking changes and assign impact score"
-      },
-      {
-        "phase": "Mapping layer",
-        "timeline": "Week 8-10",
-        "outcome": "Map affected endpoints to customer code references"
-      },
-      {
-        "phase": "Alert delivery",
-        "timeline": "Week 11-12",
-        "outcome": "Ship Slack/email/Jira workflows for proactive remediation"
-      }
+      "Ingest tickets and cluster by recurring issue patterns",
+      "Assign fix type: docs gap, UX bug, missing automation, or outage",
+      "Track ticket volume trends after each shipped fix"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Audit 15 SaaS engineering teams for recent API break incidents",
-        "Offer free weekly API risk report in exchange for feedback",
-        "Pre-sell annual plan with migration runbook add-on"
-      ],
-      "launchPlan": [
-        "Build signature vendor packs: Stripe, HubSpot, Salesforce, Google",
-        "Publish incident postmortems showing avoidable downtime",
-        "Create open-source changelog parser to drive inbound"
-      ],
-      "hiddenRisks": [
-        "Docs scraping reliability across many vendors",
-        "Some APIs provide poor machine-readable change metadata",
-        "Need careful false-positive suppression"
-      ],
-      "moatOpportunities": [
-        "Historical API change graph and impact model",
-        "Integration-specific remediation recommendations",
-        "Community-maintained vendor risk templates"
-      ]
-    }
+    "stack": ["Next.js", "SQLite or Postgres", "Fuse.js", "OpenAI", "Vercel Cron"],
+    "risks": [
+      "Teams may need trust-building before acting on AI-prioritized fixes",
+      "Ticket metadata can be noisy without normalization"
+    ],
+    "keywords": ["support", "deflection", "helpdesk", "knowledge base", "ops"]
   },
   {
-    "slug": "client-reporting-autopilot",
-    "title": "Client Reporting Autopilot for Micro Agencies",
-    "oneLiner": "Generate ROI-focused monthly client reports without manual slide writing.",
-    "category": "agency-tools",
-    "targetFounder": "Solo founder with dashboard and data connectors experience",
-    "problem": "Small agencies spend 1-2 days every month building repetitive performance reports for each client.",
-    "solution": "Pull metrics from ad platforms and analytics tools, then auto-generate narrative reports with action recommendations.",
-    "technicalComplexity": "low",
-    "marketSize": "large",
-    "difficultyScore": 5,
-    "soloFeasibilityScore": 9,
-    "buildWindowMonths": "3-5",
-    "pricingRange": "$49-$199/month",
-    "mrrPotential": "$15k-$60k",
-    "tags": ["agency", "reporting", "marketing", "automation"],
-    "marketResearch": {
-      "icp": "Boutique marketing agencies managing 5-50 clients",
-      "urgency": "High because reporting is contractual and monthly",
-      "estMarketSize": "100k+ micro agencies globally",
-      "willingnessToPay": "Strong when replacing manual labor",
-      "existingBudgetLine": "Marketing reporting or client communication tools",
-      "signalSources": [
-        "Agency owner forums discussing reporting burnout",
-        "Template marketplaces selling monthly report decks",
-        "Demand for Looker Studio alternatives"
-      ]
-    },
+    "slug": "freelancer-proposal-win-rate-lab",
+    "title": "Freelancer Proposal Win-Rate Lab",
+    "oneLinePitch": "Analyze sent proposals and show which language patterns increase close rates.",
+    "problem": "Technical freelancers send many proposals but rarely know why some convert and others fail.",
+    "audience": "Indie developers and small dev studios selling project-based work",
+    "marketSize": "Niche ($1M-$10M)",
+    "competitionScore": 4,
+    "complexity": "Low",
+    "soloFeasibility": 10,
+    "timeToMVPMonths": 2,
+    "difficultyScore": 28,
+    "pricingModel": "$29/mo solo, $79/mo team",
+    "validationSignals": [
+      "Upwork and outbound freelancers often ask for proposal templates",
+      "Cold outreach coaching markets prove willingness to pay for conversion lifts",
+      "Light integration requirements make onboarding easy"
+    ],
     "competition": [
-      {
-        "name": "AgencyAnalytics",
-        "pricing": "$79+/month",
-        "weakness": "Dashboard-heavy, weak strategic narratives",
-        "opportunity": "Differentiate with action-oriented written summaries"
-      },
-      {
-        "name": "Databox",
-        "pricing": "Tiered",
-        "weakness": "Setup friction for non-technical owners",
-        "opportunity": "Opinionated templates per agency niche"
-      },
-      {
-        "name": "Freelancer-built slides",
-        "pricing": "$200-$800/client/month labor",
-        "weakness": "Low consistency and low margin",
-        "opportunity": "Automate 80% of recurring reporting work"
-      }
+      "General copywriting tools",
+      "Freelancer communities sharing static templates",
+      "CRM tools that track pipeline but not language efficacy"
+    ],
+    "goToMarket": [
+      "Create free proposal grader that captures emails",
+      "Sponsor indie-hacker and freelancing newsletters",
+      "Bundle with proposal template packs from known creators"
     ],
     "implementationPlan": [
-      {
-        "phase": "Connector MVP",
-        "timeline": "Week 1-3",
-        "outcome": "Integrate Google Ads, Meta Ads, GA4, and Search Console"
-      },
-      {
-        "phase": "Narrative templates",
-        "timeline": "Week 4-6",
-        "outcome": "Auto-generate summary by channel and campaign goal"
-      },
-      {
-        "phase": "White-labeling",
-        "timeline": "Week 7-8",
-        "outcome": "Custom branding and PDF export per client"
-      },
-      {
-        "phase": "Client delivery automation",
-        "timeline": "Week 9-10",
-        "outcome": "Scheduled email dispatch and approval workflow"
-      }
+      "Import proposals from email/Notion/manual paste",
+      "Classify structure, pricing framing, and objection handling",
+      "Score and recommend edits tied to historical outcomes"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Interview 25 agency owners on reporting workflow and churn triggers",
-        "Offer done-for-you report generation for five agencies",
-        "Run paid pilot with setup fee + monthly subscription"
-      ],
-      "launchPlan": [
-        "Niche landing pages for SEO, PPC, and content agencies",
-        "Affiliate with fractional CMOs",
-        "Publish before/after time-saved case studies"
-      ],
-      "hiddenRisks": [
-        "API quota and connector maintenance load",
-        "Clients may request custom metrics outside template scope",
-        "Generated narratives need guardrails for accuracy"
-      ],
-      "moatOpportunities": [
-        "Best-practice benchmark datasets by agency vertical",
-        "Template marketplace for niche report packs",
-        "Cross-client anomaly detection suggestions"
-      ]
-    }
+    "stack": ["Next.js", "Supabase Postgres", "OpenAI", "Resend"],
+    "risks": [
+      "User-reported outcome data may be incomplete",
+      "Needs strong examples to prove predictive value"
+    ],
+    "keywords": ["freelance", "sales", "proposal", "conversion", "copy"]
   },
   {
-    "slug": "compliance-evidence-bot",
-    "title": "Compliance Evidence Bot for SOC 2 Maintenance",
-    "oneLiner": "Collect recurring SOC 2 evidence from cloud systems before auditors ask.",
-    "category": "compliance",
-    "targetFounder": "Security-minded founder with infrastructure automation background",
-    "problem": "Post-certification SOC 2 maintenance is repetitive and teams scramble every audit cycle.",
-    "solution": "Schedule evidence collection jobs across cloud providers, ticketing systems, and HR tools, then package an audit-ready trail.",
-    "technicalComplexity": "high",
-    "marketSize": "large",
-    "difficultyScore": 8,
-    "soloFeasibilityScore": 6,
-    "buildWindowMonths": "6-8",
-    "pricingRange": "$199-$799/month",
-    "mrrPotential": "$20k-$80k",
-    "tags": ["compliance", "soc2", "security", "automation"],
-    "marketResearch": {
-      "icp": "SaaS companies with SOC 2 Type II and lean security teams",
-      "urgency": "High before surveillance audit windows",
-      "estMarketSize": "Tens of thousands of SaaS and fintech companies",
-      "willingnessToPay": "Strong due high audit and consultant costs",
-      "existingBudgetLine": "GRC/compliance software and security operations",
-      "signalSources": [
-        "Audit consultants selling recurring evidence collection support",
-        "Security leaders discussing evidence fatigue",
-        "Rising SOC 2 certification adoption among startups"
-      ]
-    },
+    "slug": "saas-changelog-impact-analyzer",
+    "title": "SaaS Changelog Impact Analyzer",
+    "oneLinePitch": "Measure which product releases actually move activation, retention, and expansion.",
+    "problem": "Teams ship frequently but cannot tie releases to business outcomes quickly.",
+    "audience": "Product-led SaaS companies with weekly or bi-weekly release cycles",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 6,
+    "complexity": "Medium",
+    "soloFeasibility": 8,
+    "timeToMVPMonths": 4,
+    "difficultyScore": 52,
+    "pricingModel": "$129/mo with feature-impact reports",
+    "validationSignals": [
+      "Founders repeatedly ask whether shipped features improved core metrics",
+      "Current analytics workflows require manual SQL and analyst time",
+      "Release notes and telemetry APIs make integration feasible"
+    ],
     "competition": [
-      {
-        "name": "Vanta",
-        "pricing": "Premium annual contracts",
-        "weakness": "Broad platform with budget and complexity overhead",
-        "opportunity": "Lightweight maintenance-first positioning"
-      },
-      {
-        "name": "Drata",
-        "pricing": "Enterprise-style packaging",
-        "weakness": "Can be overkill after initial certification",
-        "opportunity": "Lower-cost recurring evidence automation"
-      },
-      {
-        "name": "Manual screenshots + spreadsheets",
-        "pricing": "Internal time",
-        "weakness": "Fragile and error-prone",
-        "opportunity": "Automated chain-of-custody evidence"
-      }
+      "Amplitude experiments (requires instrumentation maturity)",
+      "LaunchDarkly analytics (focused on flags)",
+      "Internal post-release reporting in spreadsheets"
+    ],
+    "goToMarket": [
+      "Target teams using Linear + PostHog",
+      "Offer a free report: last 5 releases ranked by business impact",
+      "Publish release-impact benchmarks for B2B SaaS"
     ],
     "implementationPlan": [
-      {
-        "phase": "Control library",
-        "timeline": "Week 1-3",
-        "outcome": "Map recurring SOC 2 controls to evidence data sources"
-      },
-      {
-        "phase": "Collector agents",
-        "timeline": "Week 4-9",
-        "outcome": "Build scheduled evidence collectors for key systems"
-      },
-      {
-        "phase": "Review workflow",
-        "timeline": "Week 10-12",
-        "outcome": "Owner approvals, exception logging, and audit trail"
-      },
-      {
-        "phase": "Auditor export",
-        "timeline": "Week 13-14",
-        "outcome": "Control-by-control evidence bundle export"
-      }
+      "Connect changelog entries to event segments and revenue cohorts",
+      "Compute confidence intervals for activation and retention shifts",
+      "Surface rollback candidates and follow-up opportunities"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Partner with two SOC 2 audit firms for pilot referrals",
-        "Concierge evidence collection service for five startups",
-        "Measure reduced prep hours over one quarter"
-      ],
-      "launchPlan": [
-        "Start with SOC 2 controls that generate the highest manual burden",
-        "Target post-certification maintenance in positioning",
-        "Offer migration guide from heavy GRC platforms"
-      ],
-      "hiddenRisks": [
-        "High trust requirements and security review friction",
-        "Integration breadth can dilute focus",
-        "Need strong incident-response credibility"
-      ],
-      "moatOpportunities": [
-        "Control-to-evidence mapping knowledge graph",
-        "Auditor-specific export templates",
-        "Historical evidence completeness scoring"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "OpenTelemetry ingestion", "Chart.js", "OpenAI summaries"],
+    "risks": [
+      "Causality can be overstated without robust experiment controls",
+      "Data latency may delay actionable insights"
+    ],
+    "keywords": ["changelog", "product analytics", "retention", "activation", "release"]
   },
   {
-    "slug": "oncall-postmortem-assistant",
-    "title": "On-call Postmortem Assistant",
-    "oneLiner": "Convert incident timelines into blameless postmortems and action items automatically.",
-    "category": "devops",
-    "targetFounder": "Infra-focused founder with incident management experience",
-    "problem": "Teams close incidents but skip high-quality postmortems because writing them is slow and emotionally taxing.",
-    "solution": "Collect data from logs, alerts, and chat transcripts, then build a draft postmortem with timeline, impact, root causes, and follow-ups.",
-    "technicalComplexity": "medium",
-    "marketSize": "growing",
-    "difficultyScore": 6,
-    "soloFeasibilityScore": 8,
-    "buildWindowMonths": "4-5",
-    "pricingRange": "$99-$349/month",
-    "mrrPotential": "$9k-$32k",
-    "tags": ["devops", "incident-response", "postmortem", "sre"],
-    "marketResearch": {
-      "icp": "Engineering teams with pager/on-call rotations",
-      "urgency": "High after repeated production incidents",
-      "estMarketSize": "Large pool of B2B SaaS teams with incident tooling",
-      "willingnessToPay": "Supported by reliability budget",
-      "existingBudgetLine": "Incident response or observability stack",
-      "signalSources": [
-        "SRE communities sharing postmortem templates",
-        "Internal toil from manually reconstructing timelines",
-        "Demand for ChatOps-integrated incident tools"
-      ]
-    },
+    "slug": "micro-saas-cac-payback-tracker",
+    "title": "Micro-SaaS CAC Payback Tracker",
+    "oneLinePitch": "Show true payback period by channel for tiny SaaS teams without finance ops.",
+    "problem": "Solo founders run ads, content, and affiliates but cannot confidently identify profitable acquisition channels.",
+    "audience": "Bootstrapped SaaS founders with $2k-$30k monthly marketing spend",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 5,
+    "complexity": "Low",
+    "soloFeasibility": 9,
+    "timeToMVPMonths": 3,
+    "difficultyScore": 36,
+    "pricingModel": "$49/mo starter, $119/mo pro",
+    "validationSignals": [
+      "Founders frequently ask for lightweight alternatives to enterprise BI",
+      "Many already export Stripe + ad data manually each month",
+      "Direct financial ROI framing supports paid conversion"
+    ],
     "competition": [
-      {
-        "name": "Incident.io",
-        "pricing": "Team-based",
-        "weakness": "Geared toward larger org workflows",
-        "opportunity": "Narrowly focus on post-incident writing velocity"
-      },
-      {
-        "name": "Rootly",
-        "pricing": "Enterprise leaning",
-        "weakness": "Broader lifecycle complexity",
-        "opportunity": "Postmortem-first lightweight product"
-      },
-      {
-        "name": "Google Docs templates",
-        "pricing": "Free",
-        "weakness": "Manual and inconsistent",
-        "opportunity": "Auto-fill with objective event timeline"
-      }
+      "Triple Whale and Polar Analytics (more e-commerce centric)",
+      "Baremetrics channel reports",
+      "Custom spreadsheets in founder communities"
+    ],
+    "goToMarket": [
+      "Ship an interactive CAC payback calculator",
+      "Integrate with Stripe and one ad network first for speed",
+      "Share transparent founder revenue dashboards as marketing content"
     ],
     "implementationPlan": [
-      {
-        "phase": "Data ingestion",
-        "timeline": "Week 1-2",
-        "outcome": "Connect PagerDuty, Slack, and log provider APIs"
-      },
-      {
-        "phase": "Timeline reconstruction",
-        "timeline": "Week 3-5",
-        "outcome": "Chronological event synthesis with confidence markers"
-      },
-      {
-        "phase": "Postmortem generator",
-        "timeline": "Week 6-8",
-        "outcome": "Draft narrative sections with editable structure"
-      },
-      {
-        "phase": "Action tracking",
-        "timeline": "Week 9-10",
-        "outcome": "Auto-create action items and due-date ownership"
-      }
+      "Normalize spend and subscription revenue by channel",
+      "Compute blended and channel-specific payback windows",
+      "Alert when channel payback exceeds threshold"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Offer free postmortem drafting for 10 incidents",
-        "Track writing time reduction and action completion rates",
-        "Pre-sell team plan to startups with weekly incidents"
-      ],
-      "launchPlan": [
-        "Publish incident retrospectives playbook",
-        "Integrate with GitHub and Linear issue creation",
-        "Target platform engineering newsletters"
-      ],
-      "hiddenRisks": [
-        "Sensitive incident data requires strong security posture",
-        "Root cause inference quality must be transparent",
-        "Change-management friction in established teams"
-      ],
-      "moatOpportunities": [
-        "Incident pattern library across customers",
-        "Remediation recommendation engine",
-        "Team reliability maturity scoring"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "Stripe API", "Meta Ads API", "Plausible"],
+    "risks": [
+      "Attribution remains imperfect for multi-touch journeys",
+      "Ad API instability may require fallback import flows"
+    ],
+    "keywords": ["CAC", "payback", "founder finance", "marketing", "unit economics"]
   },
   {
-    "slug": "revops-playbook-tracker",
-    "title": "RevOps Playbook Tracker",
-    "oneLiner": "Track whether reps actually execute your outbound and follow-up playbooks.",
-    "category": "sales-ops",
-    "targetFounder": "Founder with CRM automation and analytics experience",
-    "problem": "Sales leaders publish playbooks but cannot reliably see adherence across reps and deals.",
-    "solution": "Analyze CRM events and communication cadence, then score playbook compliance by rep, segment, and pipeline stage.",
-    "technicalComplexity": "low",
-    "marketSize": "growing",
-    "difficultyScore": 5,
-    "soloFeasibilityScore": 8,
-    "buildWindowMonths": "3-4",
-    "pricingRange": "$99-$299/month",
-    "mrrPotential": "$7k-$28k",
-    "tags": ["revops", "sales", "crm", "analytics"],
-    "marketResearch": {
-      "icp": "B2B SaaS sales teams with 5-50 reps",
-      "urgency": "High when pipeline conversion drops",
-      "estMarketSize": "Large mid-market and startup sales org segment",
-      "willingnessToPay": "Clear ROI if close rates improve",
-      "existingBudgetLine": "Sales enablement, coaching, and CRM tooling",
-      "signalSources": [
-        "Sales leaders manually auditing call and email logs",
-        "Community posts on low process adherence",
-        "Demand for lightweight analytics beyond Salesforce reports"
-      ]
-    },
+    "slug": "niche-saas-pricing-page-auditor",
+    "title": "Niche SaaS Pricing Page Auditor",
+    "oneLinePitch": "Benchmark your pricing page against top performers and generate prioritized improvements.",
+    "problem": "Most solo founders underprice or communicate value poorly, hurting trial-to-paid conversion.",
+    "audience": "Early-stage SaaS founders actively revising pricing and packaging",
+    "marketSize": "Niche ($1M-$10M)",
+    "competitionScore": 4,
+    "complexity": "Low",
+    "soloFeasibility": 10,
+    "timeToMVPMonths": 2,
+    "difficultyScore": 26,
+    "pricingModel": "$39/mo with unlimited audits",
+    "validationSignals": [
+      "Pricing teardown content receives high engagement among indie founders",
+      "Conversion lift from pricing changes is often immediate and measurable",
+      "Low technical barrier means fast onboarding"
+    ],
     "competition": [
-      {
-        "name": "Gong / Clari",
-        "pricing": "Enterprise priced",
-        "weakness": "Expensive and broad",
-        "opportunity": "Playbook compliance niche for smaller teams"
-      },
-      {
-        "name": "CRM native reporting",
-        "pricing": "Included",
-        "weakness": "Weak sequence and behavior analysis",
-        "opportunity": "Purpose-built compliance dashboards"
-      },
-      {
-        "name": "Sales manager manual QA",
-        "pricing": "Management time",
-        "weakness": "Not scalable",
-        "opportunity": "Automate repetitive auditing"
-      }
+      "General website audit tools",
+      "Conversion copy agencies",
+      "Manual peer feedback in communities"
+    ],
+    "goToMarket": [
+      "Publish weekly pricing teardown videos",
+      "Provide free single-page audit with email capture",
+      "Bundle with pricing calculator templates"
     ],
     "implementationPlan": [
-      {
-        "phase": "CRM sync",
-        "timeline": "Week 1-2",
-        "outcome": "Pull activities, opportunities, and stage progression"
-      },
-      {
-        "phase": "Rule engine",
-        "timeline": "Week 3-4",
-        "outcome": "Define playbook steps and scoring logic"
-      },
-      {
-        "phase": "Performance views",
-        "timeline": "Week 5-7",
-        "outcome": "Rep-level and team-level compliance dashboards"
-      },
-      {
-        "phase": "Coaching automation",
-        "timeline": "Week 8-9",
-        "outcome": "Alerts and weekly coaching briefs"
-      }
+      "Crawl pricing page and extract structure and offer signals",
+      "Compare against vertical-specific benchmark dataset",
+      "Rank recommended changes by expected revenue impact"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Pilot with 3 sales managers and compare compliance before/after",
-        "Charge setup fee for custom playbook mapping",
-        "Benchmark reps by adherence vs quota attainment"
-      ],
-      "launchPlan": [
-        "Sell through RevOps consultants",
-        "Create templates by motion: PLG, outbound, enterprise",
-        "Ship Slack digests for frontline managers"
-      ],
-      "hiddenRisks": [
-        "CRM activity hygiene can distort insights",
-        "Reps may game metrics if scoring is naive",
-        "Tool can feel punitive without coaching framing"
-      ],
-      "moatOpportunities": [
-        "Cross-company compliance benchmarks",
-        "Outcome-weighted coaching recommendations",
-        "Template marketplace for proven playbooks"
-      ]
-    }
+    "stack": ["Next.js", "Playwright", "OpenAI", "SQLite", "Resend"],
+    "risks": [
+      "Benchmark quality depends on ongoing dataset refresh",
+      "Risk of overly generic recommendations without vertical context"
+    ],
+    "keywords": ["pricing", "conversion", "positioning", "SaaS growth", "audit"]
   },
   {
-    "slug": "trial-activation-coach",
-    "title": "B2B Trial Activation Coach",
-    "oneLiner": "Detect stuck trial accounts and trigger personalized activation sequences before they churn.",
-    "category": "growth",
-    "targetFounder": "Product-growth founder with event instrumentation background",
-    "problem": "Trials fail when users never reach the first meaningful outcome, but teams react too late.",
-    "solution": "Behavior-based nudges, in-app checklists, and outreach prompts that adapt to account role and usage stage.",
-    "technicalComplexity": "medium",
-    "marketSize": "large",
-    "difficultyScore": 6,
-    "soloFeasibilityScore": 7,
-    "buildWindowMonths": "4-6",
-    "pricingRange": "$89-$399/month",
-    "mrrPotential": "$12k-$50k",
-    "tags": ["activation", "trial", "growth", "product-led"],
-    "marketResearch": {
-      "icp": "SaaS products with self-serve or product-led trial funnels",
-      "urgency": "High when trial-to-paid conversion is below target",
-      "estMarketSize": "Broad SaaS market with recurring trial funnels",
-      "willingnessToPay": "Strong because uplift is measurable",
-      "existingBudgetLine": "Product growth and lifecycle messaging",
-      "signalSources": [
-        "PLG communities discussing trial drop-off",
-        "High spend on onboarding tools with low personalization",
-        "Founders manually watching event dashboards"
-      ]
-    },
+    "slug": "customer-interview-insight-repo",
+    "title": "Customer Interview Insight Repository",
+    "oneLinePitch": "Convert customer calls into tagged opportunity themes and product priorities.",
+    "problem": "Founders run interviews but insights stay trapped in call recordings and scattered notes.",
+    "audience": "Pre-seed and seed SaaS founders conducting weekly user interviews",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 6,
+    "complexity": "Medium",
+    "soloFeasibility": 8,
+    "timeToMVPMonths": 4,
+    "difficultyScore": 51,
+    "pricingModel": "$89/mo includes 20 transcripts",
+    "validationSignals": [
+      "PM and founder communities actively share interview synthesis pain",
+      "Willingness to pay is high when synthesis saves weekly founder hours",
+      "Integrations with Zoom and Meet are straightforward"
+    ],
     "competition": [
-      {
-        "name": "Appcues / Userflow",
-        "pricing": "Usage based",
-        "weakness": "UX guidance first, weak conversion intelligence",
-        "opportunity": "Activation-risk scoring + action automation"
-      },
-      {
-        "name": "Customer.io journeys",
-        "pricing": "Message volume based",
-        "weakness": "Heavy setup, no built-in trial heuristics",
-        "opportunity": "Opinionated trial playbook templates"
-      },
-      {
-        "name": "Manual lifecycle emails",
-        "pricing": "Low",
-        "weakness": "Not behavior-adaptive",
-        "opportunity": "Real-time event-driven intervention"
-      }
+      "Dovetail and Grain",
+      "Notion databases with manual tagging",
+      "AI meeting assistants without product-research workflows"
+    ],
+    "goToMarket": [
+      "Create downloadable interview script packs",
+      "Offer migration from Notion interview docs",
+      "Partner with startup accelerators for founder cohorts"
     ],
     "implementationPlan": [
-      {
-        "phase": "Event schema setup",
-        "timeline": "Week 1-2",
-        "outcome": "Track key activation milestones and blockers"
-      },
-      {
-        "phase": "Risk model",
-        "timeline": "Week 3-5",
-        "outcome": "Predict accounts likely to stall before conversion"
-      },
-      {
-        "phase": "Playbook engine",
-        "timeline": "Week 6-8",
-        "outcome": "Trigger nudges and owner tasks by risk scenario"
-      },
-      {
-        "phase": "ROI reporting",
-        "timeline": "Week 9-10",
-        "outcome": "Measure conversion lift and time-to-activation"
-      }
+      "Import transcripts and extract pains, jobs, and willingness-to-pay cues",
+      "Group findings into opportunity clusters by frequency and urgency",
+      "Track which insights have corresponding roadmap items"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Run activation teardown sessions for 15 trial-heavy SaaS teams",
-        "Offer trial rescue concierge pilot with rev-share pricing",
-        "Test messaging templates against baseline conversion"
-      ],
-      "launchPlan": [
-        "Publish activation benchmark report by segment",
-        "Integration-first launch with Segment and PostHog",
-        "Co-market with onboarding consultants"
-      ],
-      "hiddenRisks": [
-        "Garbage event tracking leads to bad interventions",
-        "Over-messaging can reduce product trust",
-        "Attribution of conversion lift can be noisy"
-      ],
-      "moatOpportunities": [
-        "Cross-product activation pattern benchmarks",
-        "Adaptive intervention recipes by persona",
-        "Longitudinal trial cohort intelligence"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "Whisper API", "OpenAI", "Vector search"],
+    "risks": [
+      "Speech-to-text quality varies with noisy calls",
+      "Users may expect perfect summary fidelity"
+    ],
+    "keywords": ["customer research", "interviews", "product discovery", "insights", "founders"]
   },
   {
-    "slug": "integration-health-monitor",
-    "title": "Integration Health Monitor for SaaS Customers",
-    "oneLiner": "Alert customers before their connected integrations silently fail.",
-    "category": "customer-success",
-    "targetFounder": "Full-stack founder with background in reliability and integrations",
-    "problem": "Broken integrations create hidden churn risk because customers discover failures days later.",
-    "solution": "Track sync freshness, API error rates, and missing data anomalies, then trigger customer-facing remediation guidance.",
-    "technicalComplexity": "medium",
-    "marketSize": "large",
-    "difficultyScore": 7,
-    "soloFeasibilityScore": 7,
-    "buildWindowMonths": "5-6",
-    "pricingRange": "$129-$499/month",
-    "mrrPotential": "$14k-$55k",
-    "tags": ["integrations", "reliability", "customer-success", "monitoring"],
-    "marketResearch": {
-      "icp": "SaaS vendors that sync data between multiple customer systems",
-      "urgency": "High due direct user trust impact",
-      "estMarketSize": "Large in SaaS categories with CRM/ERP/data sync",
-      "willingnessToPay": "Defensible through reduced churn and support volume",
-      "existingBudgetLine": "Reliability engineering and support tooling",
-      "signalSources": [
-        "Support tickets about stale integrations",
-        "Engineering teams building one-off sync monitors",
-        "Customer success complaints about silent failure detection"
-      ]
-    },
+    "slug": "compliance-questionnaire-autofill",
+    "title": "Security Questionnaire Autofill for Small SaaS",
+    "oneLinePitch": "Auto-complete vendor security questionnaires using your existing policy docs.",
+    "problem": "Founders lose enterprise deals because compliance questionnaires take days to complete manually.",
+    "audience": "B2B SaaS teams selling to mid-market and enterprise buyers",
+    "marketSize": "Large ($100M+)",
+    "competitionScore": 8,
+    "complexity": "High",
+    "soloFeasibility": 6,
+    "timeToMVPMonths": 6,
+    "difficultyScore": 72,
+    "pricingModel": "$399/mo + per-questionnaire credits",
+    "validationSignals": [
+      "Sales-led SaaS teams report questionnaire handling as a top bottleneck",
+      "Budget exists because delays directly impact deal cycle length",
+      "Strong compliance trend in procurement requirements"
+    ],
     "competition": [
-      {
-        "name": "Internal health scripts",
-        "pricing": "Engineering labor",
-        "weakness": "No customer-facing visibility",
-        "opportunity": "Shared dashboard + proactive notifications"
-      },
-      {
-        "name": "Generic observability tools",
-        "pricing": "Usage based",
-        "weakness": "Not integration-domain aware",
-        "opportunity": "Opinionated integration SLAs and remediation"
-      },
-      {
-        "name": "No monitoring",
-        "pricing": "Churn cost",
-        "weakness": "Reactive incident handling",
-        "opportunity": "Prevent trust erosion with proactive alerts"
-      }
+      "Vanta Trust Center questionnaire workflows",
+      "HyperComply",
+      "Manual Google Docs and legal review processes"
+    ],
+    "goToMarket": [
+      "Target founder-led sales teams with active SOC 2 projects",
+      "Offer pilot on first 3 questionnaires",
+      "Partner with compliance consultants"
     ],
     "implementationPlan": [
-      {
-        "phase": "Health model",
-        "timeline": "Week 1-2",
-        "outcome": "Define freshness/error/completeness indicators"
-      },
-      {
-        "phase": "Connector SDK",
-        "timeline": "Week 3-6",
-        "outcome": "Collect health telemetry from core integration jobs"
-      },
-      {
-        "phase": "Alert routing",
-        "timeline": "Week 7-8",
-        "outcome": "Send alerts to internal teams and impacted customers"
-      },
-      {
-        "phase": "Recovery playbooks",
-        "timeline": "Week 9-10",
-        "outcome": "Guided troubleshooting and re-auth flows"
-      }
+      "Ingest policy docs and prior responses",
+      "Map incoming questionnaire fields to reusable answer bank",
+      "Flag high-risk questions for manual review"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Interview customer success leads about integration-driven churn",
-        "Build a free integration uptime widget and track interest",
-        "Run paid design partners with SLA reporting commitments"
-      ],
-      "launchPlan": [
-        "Target SaaS categories where sync integrity is mission-critical",
-        "Create incident templates for top API providers",
-        "Publish remediation response-time benchmarks"
-      ],
-      "hiddenRisks": [
-        "Integration-specific edge cases can expand scope quickly",
-        "Need high alert precision to avoid fatigue",
-        "Some vendors block deep telemetry access"
-      ],
-      "moatOpportunities": [
-        "Integration reliability benchmark data network",
-        "Auto-remediation engine for common failure modes",
-        "Shared health score customers can trust"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "OCR pipeline", "Embeddings", "RBAC"],
+    "risks": [
+      "Incorrect auto-filled security claims can create legal exposure",
+      "Needs enterprise-grade audit trail features sooner"
+    ],
+    "keywords": ["compliance", "security", "questionnaire", "B2B sales", "SOC2"]
   },
   {
-    "slug": "community-sponsorship-roi",
-    "title": "Community Sponsorship ROI Tracker",
-    "oneLiner": "Measure whether podcast, newsletter, and community sponsorships actually convert into pipeline.",
-    "category": "marketing-analytics",
-    "targetFounder": "Indie founder with attribution and analytics skills",
-    "problem": "B2B startups spend on niche sponsorships but cannot attribute outcomes beyond vanity referral traffic.",
-    "solution": "Track campaign-specific landing journeys, self-reported attribution, and influenced pipeline from first touch to closed-won.",
-    "technicalComplexity": "low",
-    "marketSize": "micro",
-    "difficultyScore": 4,
-    "soloFeasibilityScore": 9,
-    "buildWindowMonths": "3-4",
-    "pricingRange": "$39-$149/month",
-    "mrrPotential": "$4k-$18k",
-    "tags": ["attribution", "sponsorship", "b2b-marketing", "analytics"],
-    "marketResearch": {
-      "icp": "Seed-stage B2B startups spending $2k-$30k/month on sponsorships",
-      "urgency": "Medium but spikes during budget planning",
-      "estMarketSize": "Narrow but concentrated in active startup ecosystem",
-      "willingnessToPay": "Moderate with clear spend optimization",
-      "existingBudgetLine": "Marketing analytics / paid acquisition tooling",
-      "signalSources": [
-        "Founders asking how to track newsletter sponsorship ROI",
-        "Podcast and community ad buyers relying on discount codes only",
-        "Attribution blind spots in CRMs"
-      ]
-    },
+    "slug": "self-serve-migration-assistant",
+    "title": "Self-Serve Data Migration Assistant",
+    "oneLinePitch": "Guide new customers through import mapping so onboarding does not require founder support.",
+    "problem": "Data migration is the biggest blocker for trial-to-paid conversion in many B2B SaaS products.",
+    "audience": "SaaS products replacing spreadsheets or competitor tools",
+    "marketSize": "Large ($100M+)",
+    "competitionScore": 7,
+    "complexity": "High",
+    "soloFeasibility": 6,
+    "timeToMVPMonths": 6,
+    "difficultyScore": 70,
+    "pricingModel": "$249/mo + usage",
+    "validationSignals": [
+      "Customer success teams often build internal migration scripts",
+      "Migration friction is a known top reason for lost deals",
+      "Import APIs and CSV flows provide common technical wedge"
+    ],
     "competition": [
-      {
-        "name": "Google Analytics + UTM",
-        "pricing": "Low",
-        "weakness": "Weak pipeline and influenced revenue mapping",
-        "opportunity": "Tie top-of-funnel to deal outcomes"
-      },
-      {
-        "name": "Triple Whale / ecommerce tools",
-        "pricing": "Commerce-focused",
-        "weakness": "Not built for long B2B sales cycles",
-        "opportunity": "Purpose-built B2B sponsorship attribution"
-      },
-      {
-        "name": "Manual CRM tagging",
-        "pricing": "Time cost",
-        "weakness": "Inconsistent and incomplete",
-        "opportunity": "Automated, campaign-aware enrichment"
-      }
+      "Flatfile",
+      "Workato templates",
+      "Internal scripts maintained by onboarding engineers"
+    ],
+    "goToMarket": [
+      "Ship with opinionated templates for CRMs and project tools",
+      "Show migration completion-rate improvements",
+      "Co-sell with onboarding consultants"
     ],
     "implementationPlan": [
-      {
-        "phase": "Campaign tracking",
-        "timeline": "Week 1-2",
-        "outcome": "Generate channel-specific links and forms"
-      },
-      {
-        "phase": "CRM sync",
-        "timeline": "Week 3-5",
-        "outcome": "Connect first touch data to opportunities"
-      },
-      {
-        "phase": "Influence model",
-        "timeline": "Week 6-7",
-        "outcome": "Score sponsorship contribution across funnel stages"
-      },
-      {
-        "phase": "Spend optimizer",
-        "timeline": "Week 8-9",
-        "outcome": "Rank communities/podcasts by expected ROI"
-      }
+      "Provide field mapping UI with smart type suggestions",
+      "Validate and clean data before import",
+      "Give migration confidence score and dry-run preview"
     ],
-    "premium": {
-      "validationExperiments": [
-        "Audit 20 startup sponsorship campaigns and compare tracking methods",
-        "Offer manual attribution setup service and collect baseline data",
-        "Test willingness to pay by tiering reports vs recommendations"
-      ],
-      "launchPlan": [
-        "Launch in startup podcast and newsletter communities",
-        "Create channel ROI benchmark leaderboard",
-        "Bundle with campaign brief templates"
-      ],
-      "hiddenRisks": [
-        "Attribution confidence remains probabilistic",
-        "Small sample sizes per campaign",
-        "Customer education needed on influenced revenue models"
-      ],
-      "moatOpportunities": [
-        "Cross-campaign performance benchmarks",
-        "Vertical-specific channel recommendations",
-        "Historical payback period predictions"
-      ]
-    }
+    "stack": ["Next.js", "Postgres", "Queue workers", "CSV parser", "OpenAI mapping assist"],
+    "risks": [
+      "Edge-case data formats can consume support time",
+      "Large imports need robust job processing"
+    ],
+    "keywords": ["onboarding", "migration", "data import", "activation", "B2B SaaS"]
+  },
+  {
+    "slug": "affiliate-payout-reconciliation",
+    "title": "Affiliate Payout Reconciliation for Micro-SaaS",
+    "oneLinePitch": "Automatically reconcile affiliate commissions against refunds, downgrades, and failed payments.",
+    "problem": "Founders overpay affiliates or spend manual hours fixing payout disputes.",
+    "audience": "Bootstrapped SaaS with partner or affiliate acquisition channels",
+    "marketSize": "Niche ($1M-$10M)",
+    "competitionScore": 5,
+    "complexity": "Medium",
+    "soloFeasibility": 8,
+    "timeToMVPMonths": 4,
+    "difficultyScore": 47,
+    "pricingModel": "$59/mo + 0.2% of managed payouts",
+    "validationSignals": [
+      "Affiliate programs are rising among indie SaaS founders",
+      "Refund clawback handling is a repeated pain point",
+      "Accounting reconciliation pain creates strong retention if solved"
+    ],
+    "competition": [
+      "Rewardful and FirstPromoter",
+      "Manual Stripe exports to accounting",
+      "Custom scripts with poor auditability"
+    ],
+    "goToMarket": [
+      "Launch with Stripe + Rewardful integration",
+      "Offer free payout discrepancy scanner",
+      "Promote through affiliate manager communities"
+    ],
+    "implementationPlan": [
+      "Ingest payout events and subscription lifecycle changes",
+      "Compute accurate net commission per partner",
+      "Export approved payouts to payment rails and accounting"
+    ],
+    "stack": ["Next.js", "Postgres", "Stripe webhooks", "CSV exports", "Email alerts"],
+    "risks": [
+      "Financial reporting errors reduce trust quickly",
+      "Needs transparent audit logs from day one"
+    ],
+    "keywords": ["affiliate", "payout", "finance ops", "reconciliation", "SaaS"]
+  },
+  {
+    "slug": "feature-request-prioritization-engine",
+    "title": "Feature Request Prioritization Engine",
+    "oneLinePitch": "Rank feature requests by revenue impact, retention risk, and implementation effort.",
+    "problem": "Small teams collect feedback in multiple tools and struggle to decide what to build next.",
+    "audience": "Product teams at SaaS companies with active customer feedback loops",
+    "marketSize": "Growing ($10M-$100M)",
+    "competitionScore": 7,
+    "complexity": "Medium",
+    "soloFeasibility": 8,
+    "timeToMVPMonths": 5,
+    "difficultyScore": 55,
+    "pricingModel": "$99/mo base + seats",
+    "validationSignals": [
+      "Community posts regularly ask for objective roadmap scoring",
+      "Decision latency around feature requests costs expansion revenue",
+      "Integrates into existing tools instead of replacing roadmap stack"
+    ],
+    "competition": [
+      "Canny",
+      "Productboard",
+      "Linear issue labels and spreadsheets"
+    ],
+    "goToMarket": [
+      "Publish feature prioritization score template",
+      "Integrate with Intercom, Slack, and Linear",
+      "Provide exec-ready quarterly roadmap report"
+    ],
+    "implementationPlan": [
+      "Aggregate requests and deduplicate themes",
+      "Attach account ARR and churn risk context",
+      "Generate ranked queue with scenario planning"
+    ],
+    "stack": ["Next.js", "Postgres", "OpenAI", "Slack API", "Linear API"],
+    "risks": [
+      "Model scoring can appear opinionated without transparency",
+      "Needs clear human override controls"
+    ],
+    "keywords": ["feature requests", "roadmap", "product ops", "prioritization", "B2B SaaS"]
   }
 ]

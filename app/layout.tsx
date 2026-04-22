@@ -1,66 +1,54 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 
 import "@/app/globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const headingFont = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-sans"
+  variable: "--font-heading"
 });
 
-const ibmPlexMono = IBM_Plex_Mono({
+const bodyFont = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono"
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body"
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://indie-idea-vault.example"),
+  metadataBase: new URL("https://validated-solo-saas-ideas.com"),
   title: {
-    default: "Indie Idea Vault | Validated SaaS Ideas for Solo Founders",
-    template: "%s | Indie Idea Vault"
+    default: "Validated Solo SaaS Ideas",
+    template: "%s | Validated Solo SaaS Ideas"
   },
   description:
-    "Curated SaaS ideas with market research, competition analysis, and execution difficulty scoring so solo founders can pick ideas they can actually ship.",
+    "Curated SaaS ideas for indie hackers with market research, competition analysis, and implementation difficulty scores.",
   keywords: [
+    "SaaS ideas",
     "indie hackers",
-    "solo founder ideas",
-    "validated saas ideas",
-    "startup idea database",
-    "market validation"
+    "solo founder",
+    "market validation",
+    "micro saas",
+    "startup ideas"
   ],
   openGraph: {
+    title: "Validated Solo SaaS Ideas",
+    description:
+      "Pick a SaaS problem you can realistically ship solo in 3-6 months using validated demand signals.",
     type: "website",
-    title: "Indie Idea Vault",
-    description: "Find SaaS ideas you can build alone in 3-6 months with real validation data.",
-    url: "https://indie-idea-vault.example",
-    siteName: "Indie Idea Vault",
-    images: [
-      {
-        url: "https://indie-idea-vault.example/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Indie Idea Vault dashboard preview"
-      }
-    ]
+    url: "https://validated-solo-saas-ideas.com",
+    siteName: "Validated Solo SaaS Ideas"
   },
   twitter: {
     card: "summary_large_image",
-    title: "Indie Idea Vault",
-    description: "Validated SaaS ideas with feasibility scoring for solo founders."
-  },
-  robots: {
-    index: true,
-    follow: true
+    title: "Validated Solo SaaS Ideas",
+    description: "A curated SaaS idea database for technical founders who need validated, buildable opportunities."
   }
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>): React.JSX.Element {
   return (
-    <html lang="en" className="dark">
-      <body className={`${spaceGrotesk.variable} ${ibmPlexMono.variable} bg-[#0d1117] text-slate-100 antialiased`}>
-        {children}
-      </body>
+    <html lang="en">
+      <body className={`${headingFont.variable} ${bodyFont.variable} font-[var(--font-body)] antialiased`}>{children}</body>
     </html>
   );
 }

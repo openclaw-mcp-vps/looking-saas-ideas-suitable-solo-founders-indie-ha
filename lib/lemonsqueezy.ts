@@ -1,110 +1,107 @@
-import crypto from "node:crypto";
+import { createHmac, timingSafeEqual } from "node:crypto";
 
-import type { PurchaseRecord } from "@/types";
+export const ACCESS_COOKIE_NAME = "indie_idea_access";
 
-type WebhookAttributes = Record<string, unknown>;
-
-export interface LemonSqueezyWebhookPayload {
-  meta?: {
-    event_name?: string;
-  };
-  data?: {
-    id?: string;
-    attributes?: WebhookAttributes;
-  };
+function getSigningSecret(): string {
+  return process.env.STRIPE_WEBHOOK_SECRET ?? "";
 }
 
-const ACTIVE_EVENTS = new Set([
-  "order_created",
-  "subscription_created",
-  "subscription_payment_success",
-  "subscription_payment_recovered"
-]);
-
-const CANCELLED_EVENTS = new Set([
-  "subscription_cancelled",
-  "subscription_expired",
-  "subscription_refunded",
-  "order_refunded"
-]);
-
-function getString(attributes: WebhookAttributes, key: string): string | undefined {
-  const value = attributes[key];
-
-  if (typeof value === "string" && value.trim().length > 0) {
-    return value.trim();
-  }
-
-  return undefined;
+function signPayload(payload: string, secret: string): string {
+  return createHmac("sha256", secret).update(payload).digest("hex");
 }
 
-export function getCheckoutUrl(): string | null {
-  const rawProduct = process.env.NEXT_PUBLIC_LEMON_SQUEEZY_PRODUCT_ID?.trim();
+function safeCompare(a: string, b: string): boolean {
+  const aBuffer = Buffer.from(a);
+  const bBuffer = Buffer.from(b);
 
-  if (!rawProduct) {
-    return null;
-  }
-
-  if (rawProduct.startsWith("http://") || rawProduct.startsWith("https://")) {
-    const separator = rawProduct.includes("?") ? "&" : "?";
-    return `${rawProduct}${separator}embed=1`;
-  }
-
-  return `https://app.lemonsqueezy.com/checkout/buy/${rawProduct}?embed=1`;
-}
-
-export function verifyLemonSqueezySignature(rawBody: string, signatureHeader: string | null): boolean {
-  const secret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
-
-  if (!secret || !signatureHeader) {
+  if (aBuffer.length !== bBuffer.length) {
     return false;
   }
 
-  const digest = crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
-  const left = Buffer.from(digest, "utf8");
-  const right = Buffer.from(signatureHeader, "utf8");
+  return timingSafeEqual(aBuffer, bBuffer);
+}
 
-  if (left.length !== right.length) {
+export function getStripePaymentLink(): string | undefined {
+  return process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK;
+}
+
+export function createAccessCookieValue(email: string): string {
+  const secret = getSigningSecret();
+  const normalizedEmail = email.trim().toLowerCase();
+
+  if (!secret) {
+    return `paid:${normalizedEmail}`;
+  }
+
+  const expiresAt = Date.now() + 30 * 24 * 60 * 60 * 1000;
+  const payload = `${normalizedEmail}|${expiresAt}`;
+  const signature = signPayload(payload, secret);
+
+  return Buffer.from(`${payload}|${signature}`).toString("base64url");
+}
+
+export function verifyAccessCookieValue(cookieValue: string | undefined): boolean {
+  if (!cookieValue) {
     return false;
   }
 
-  return crypto.timingSafeEqual(left, right);
+  const secret = getSigningSecret();
+
+  if (!secret) {
+    return cookieValue.startsWith("paid:");
+  }
+
+  let decoded: string;
+
+  try {
+    decoded = Buffer.from(cookieValue, "base64url").toString("utf8");
+  } catch {
+    return false;
+  }
+
+  const [email, expiresAtRaw, signature] = decoded.split("|");
+  const expiresAt = Number(expiresAtRaw);
+
+  if (!email || !Number.isFinite(expiresAt) || !signature) {
+    return false;
+  }
+
+  if (expiresAt < Date.now()) {
+    return false;
+  }
+
+  const expected = signPayload(`${email}|${expiresAtRaw}`, secret);
+  return safeCompare(signature, expected);
 }
 
-export function extractPurchaseRecord(payload: LemonSqueezyWebhookPayload): PurchaseRecord | null {
-  const eventName = payload.meta?.event_name;
-
-  if (!eventName) {
-    return null;
+export function verifyStripeWebhookSignature(
+  rawBody: string,
+  signatureHeader: string | null,
+  secret: string
+): boolean {
+  if (!signatureHeader || !secret) {
+    return false;
   }
 
-  const attributes = payload.data?.attributes ?? {};
-  const email =
-    getString(attributes, "user_email") ??
-    getString(attributes, "customer_email") ??
-    getString(attributes, "email");
+  const fields = signatureHeader
+    .split(",")
+    .map((part) => part.trim())
+    .map((part) => {
+      const [key, value] = part.split("=");
+      return { key, value };
+    });
 
-  if (!email) {
-    return null;
+  const timestamp = fields.find((field) => field.key === "t")?.value;
+  const signatures = fields
+    .filter((field) => field.key === "v1" && Boolean(field.value))
+    .map((field) => field.value as string);
+
+  if (!timestamp || signatures.length === 0) {
+    return false;
   }
 
-  const orderId = payload.data?.id ?? getString(attributes, "order_id") ?? `event-${Date.now()}`;
+  const signedPayload = `${timestamp}.${rawBody}`;
+  const expected = signPayload(signedPayload, secret);
 
-  let status: PurchaseRecord["status"] = "active";
-
-  if (CANCELLED_EVENTS.has(eventName)) {
-    status = "cancelled";
-  } else if (eventName.includes("refund")) {
-    status = "refunded";
-  } else if (!ACTIVE_EVENTS.has(eventName)) {
-    return null;
-  }
-
-  return {
-    email: email.toLowerCase(),
-    orderId,
-    status,
-    eventName,
-    updatedAt: new Date().toISOString()
-  };
+  return signatures.some((signature) => safeCompare(signature, expected));
 }

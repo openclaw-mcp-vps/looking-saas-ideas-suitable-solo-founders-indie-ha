@@ -1,197 +1,185 @@
 import Link from "next/link";
-import { ArrowRight, ChartNoAxesCombined, Filter, Rocket, ShieldCheck, Target } from "lucide-react";
+import { cookies } from "next/headers";
+import { ArrowRight, ChartNoAxesCombined, ShieldCheck, Timer, UserCheck } from "lucide-react";
 
-import { IdeaCard } from "@/components/IdeaCard";
 import { PricingSection } from "@/components/PricingSection";
-import { Button } from "@/components/ui/button";
-import { hasPremiumAccess } from "@/lib/auth";
-import { getAllIdeas } from "@/lib/ideas";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { getAllIdeas } from "@/lib/database";
+import { ACCESS_COOKIE_NAME, verifyAccessCookieValue } from "@/lib/lemonsqueezy";
+import { cn } from "@/lib/utils";
 
-const faqs = [
-  {
-    question: "How is this different from generic startup idea lists?",
-    answer:
-      "Each idea includes market urgency signals, competition gaps, and a realistic implementation path for a single technical founder. You are not buying inspiration, you are buying filtered execution options."
-  },
-  {
-    question: "How do you score solo-founder feasibility?",
-    answer:
-      "We score ideas by integration burden, sales complexity, required support load, and compliance overhead. A high score means one person can ship and operate an MVP in 3-6 months."
-  },
-  {
-    question: "Will this help if I already have one idea in mind?",
-    answer:
-      "Yes. You can benchmark your current idea against alternatives and use the validation checklists to test demand before committing months of build time."
-  },
-  {
-    question: "What happens after I subscribe?",
-    answer:
-      "You get immediate access to all idea briefs, premium validation playbooks, and ongoing weekly additions. Access is restored in this browser through a secure cookie after purchase verification."
-  }
-];
-
-export default async function HomePage() {
-  const ideas = getAllIdeas().slice(0, 3);
-  const hasAccess = await hasPremiumAccess();
+export default async function HomePage(): Promise<React.JSX.Element> {
+  const cookieStore = await cookies();
+  const hasAccess = verifyAccessCookieValue(cookieStore.get(ACCESS_COOKIE_NAME)?.value);
+  const totalIdeas = getAllIdeas().length;
 
   return (
-    <main className="pb-16">
-      <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-6">
-        <div>
-          <p className="text-xs uppercase tracking-[0.22em] text-cyan-300">Indie Idea Vault</p>
-          <p className="text-sm text-slate-400">Validated SaaS ideas for solo founders</p>
+    <div className="min-h-screen bg-[#0d1117]">
+      <header className="border-b border-[#30363d] bg-[#0d1117]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+          <p className="text-sm font-semibold tracking-wide text-[#f0f6fc]">Validated Solo SaaS Ideas</p>
+          <nav className="flex items-center gap-5 text-sm text-[#9ca3af]">
+            <a href="#problem" className="hover:text-[#e6edf3]">
+              Problem
+            </a>
+            <a href="#solution" className="hover:text-[#e6edf3]">
+              Solution
+            </a>
+            <a href="#pricing" className="hover:text-[#e6edf3]">
+              Pricing
+            </a>
+          </nav>
         </div>
-        <Link href="/ideas">
-          <Button variant="secondary">Browse Database</Button>
-        </Link>
       </header>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-8 px-4 pt-8 md:grid-cols-[1.15fr_0.85fr]">
-        <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-cyan-300">
-            <Target className="h-4 w-4" />
-            Stop Building the Wrong Product
-          </div>
-
-          <h1 className="text-4xl font-semibold leading-tight text-slate-100 md:text-6xl">
-            Looking for SaaS ideas suitable for solo founders?
+      <main>
+        <section className="mx-auto max-w-6xl px-4 pb-20 pt-14 sm:px-6 md:pb-28 md:pt-20">
+          <Badge variant="secondary" className="mb-4 w-fit border-[#2f81f7]/30 bg-[#2f81f7]/15 text-[#79c0ff]">
+            Built for indie hackers and technical solo founders
+          </Badge>
+          <h1 className="max-w-4xl text-4xl font-bold leading-tight text-[#f0f6fc] md:text-6xl md:leading-[1.1]">
+            Stop guessing startup ideas. Build the one you can actually win.
           </h1>
-
-          <p className="max-w-2xl text-lg text-slate-300">
-            Pick from validated SaaS opportunities with competition analysis, implementation difficulty scores, and
-            solo-founder feasibility filters. Build what has demand and fits your execution bandwidth.
+          <p className="mt-5 max-w-3xl text-base leading-relaxed text-[#9ca3af] md:text-lg">
+            Explore a curated dataset of validated SaaS opportunities with market signal evidence, competitor landscape,
+            implementation difficulty scoring, and solo-founder feasibility. Choose a problem you can ship in 3-6
+            months and start with confidence.
           </p>
 
-          <div className="flex flex-wrap gap-3">
-            <Link href="/ideas">
-              <Button size="lg">
-                Explore idea library
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link href="/ideas" className={cn(buttonVariants({ variant: "default", size: "lg" }), "w-full sm:w-auto")}>
+              Explore Idea Database
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
-            <a href="#pricing">
-              <Button variant="outline" size="lg">
-                See $15/mo plan
-              </Button>
+            <a href="#pricing" className={cn(buttonVariants({ variant: "outline", size: "lg" }), "w-full sm:w-auto")}>
+              View Pricing
             </a>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
-            {[
-              { label: "Failure driver", value: "Wrong problem choice" },
-              { label: "Build target", value: "3-6 month MVP scope" },
-              { label: "Ideal user", value: "Technical solo founders" }
-            ].map((item) => (
-              <div key={item.label} className="rounded-xl border border-slate-800 bg-slate-900/70 p-3">
-                <p className="text-xs uppercase tracking-wide text-slate-400">{item.label}</p>
-                <p className="pt-1 text-sm font-semibold text-slate-100">{item.value}</p>
-              </div>
-            ))}
+          <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-4">
+              <p className="text-2xl font-bold text-[#f0f6fc]">{totalIdeas}+</p>
+              <p className="text-sm text-[#9ca3af]">validated SaaS ideas in the current database</p>
+            </div>
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-4">
+              <p className="text-2xl font-bold text-[#f0f6fc]">3-6 mo</p>
+              <p className="text-sm text-[#9ca3af]">target MVP window optimized for one founder</p>
+            </div>
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-4">
+              <p className="text-2xl font-bold text-[#f0f6fc]">$15/mo</p>
+              <p className="text-sm text-[#9ca3af]">affordable research edge vs months of wrong execution</p>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-          <h2 className="text-xl font-semibold text-slate-100">How founders lose 6+ months</h2>
-          <div className="mt-4 space-y-4">
-            {[
-              {
-                icon: ChartNoAxesCombined,
-                title: "No market proof",
-                copy: "Ideas are picked from trends, not buyer urgency or budget reality."
-              },
-              {
-                icon: ShieldCheck,
-                title: "Underestimated complexity",
-                copy: "A solo founder starts an enterprise-level problem with hidden support burden."
-              },
-              {
-                icon: Rocket,
-                title: "Weak launch strategy",
-                copy: "No path to first 10 paying customers before engineering effort starts."
-              }
-            ].map((item) => (
-              <div key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
-                <div className="flex items-center gap-2 text-cyan-300">
-                  <item.icon className="h-4 w-4" />
-                  <p className="font-semibold">{item.title}</p>
-                </div>
-                <p className="pt-1 text-sm text-slate-300">{item.copy}</p>
-              </div>
-            ))}
+        <section id="problem" className="border-y border-[#30363d] bg-[#111827]/45">
+          <div className="mx-auto grid max-w-6xl gap-6 px-4 py-12 sm:px-6 md:grid-cols-3 md:py-16">
+            <div>
+              <Timer className="mb-3 h-6 w-6 text-[#79c0ff]" />
+              <h2 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Months wasted on unvalidated builds</h2>
+              <p className="text-sm text-[#9ca3af]">
+                Most indie projects fail because founders pick low-demand ideas or overly complex markets.
+              </p>
+            </div>
+            <div>
+              <ChartNoAxesCombined className="mb-3 h-6 w-6 text-[#79c0ff]" />
+              <h2 className="mb-2 text-lg font-semibold text-[#f0f6fc]">No practical market intelligence</h2>
+              <p className="text-sm text-[#9ca3af]">
+                Competitor and demand data is fragmented, expensive, and rarely tuned for one-person teams.
+              </p>
+            </div>
+            <div>
+              <UserCheck className="mb-3 h-6 w-6 text-[#79c0ff]" />
+              <h2 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Execution mismatch for solo founders</h2>
+              <p className="text-sm text-[#9ca3af]">
+                Good ideas still fail if the implementation burden requires a full product, sales, and support team.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="mx-auto mt-16 w-full max-w-6xl px-4">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Preview</p>
-            <h2 className="mt-2 text-3xl font-semibold text-slate-100">Validated opportunities you can execute solo</h2>
+        <section id="solution" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
+          <h2 className="text-3xl font-bold text-[#f0f6fc]">What you get inside</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[#9ca3af] md:text-base">
+            This is not a random startup idea list. Each opportunity is scored for feasibility, execution risk, and
+            monetization path so you can choose faster and execute with fewer surprises.
+          </p>
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-5">
+              <h3 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Advanced filters that match your constraints</h3>
+              <p className="text-sm text-[#9ca3af]">
+                Narrow by technical complexity, market size, solo-feasibility score, and time-to-MVP so you only see
+                ideas you can realistically ship.
+              </p>
+            </div>
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-5">
+              <h3 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Competition and positioning context</h3>
+              <p className="text-sm text-[#9ca3af]">
+                Understand who already serves the space, where incumbents are weak, and where a solo founder can carve
+                a clear wedge.
+              </p>
+            </div>
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-5">
+              <h3 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Practical implementation plans</h3>
+              <p className="text-sm text-[#9ca3af]">
+                Get concrete build phases, recommended stack direction, and launch strategies designed for a one-person
+                product team.
+              </p>
+            </div>
+            <div className="rounded-xl border border-[#30363d] bg-[#161b22]/70 p-5">
+              <h3 className="mb-2 text-lg font-semibold text-[#f0f6fc]">Low-friction premium access</h3>
+              <p className="text-sm text-[#9ca3af]">
+                Purchase through Stripe hosted checkout, then unlock this browser with your purchase email. No complex
+                account setup required.
+              </p>
+            </div>
           </div>
-          <Link href="/ideas" className="hidden md:block">
-            <Button variant="secondary">
-              <Filter className="h-4 w-4" />
-              Open full filters
-            </Button>
-          </Link>
-        </div>
+        </section>
 
-        <div className="mt-6 grid gap-4 lg:grid-cols-3">
-          {ideas.map((idea) => (
-            <IdeaCard key={idea.slug} idea={idea} hasAccess={hasAccess} />
-          ))}
-        </div>
-      </section>
+        <PricingSection hasAccess={hasAccess} />
 
-      <section className="mx-auto mt-16 w-full max-w-6xl px-4">
-        <div className="rounded-3xl border border-slate-800 bg-slate-900/65 p-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Method</p>
-          <h2 className="mt-2 text-3xl font-semibold text-slate-100">A decision framework, not a random idea dump</h2>
-          <div className="mt-6 grid gap-4 md:grid-cols-3">
-            {[
-              {
-                title: "Demand Validation",
-                copy: "Each idea includes real market signals and interview hypotheses to test willingness to pay before coding."
-              },
-              {
-                title: "Competition Positioning",
-                copy: "We map incumbent weaknesses so you can win with narrow scope and speed instead of feature parity."
-              },
-              {
-                title: "Execution Fit",
-                copy: "Difficulty and feasibility scoring prevent you from picking projects that require a full team to survive."
-              }
-            ].map((item) => (
-              <article key={item.title} className="rounded-xl border border-slate-800 bg-slate-950/70 p-4">
-                <h3 className="text-lg font-semibold text-slate-100">{item.title}</h3>
-                <p className="pt-2 text-sm text-slate-300">{item.copy}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="mt-16">
-        <PricingSection />
-      </div>
-
-      <section className="mx-auto mt-16 w-full max-w-5xl px-4">
-        <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">FAQ</p>
-        <h2 className="mt-2 text-3xl font-semibold text-slate-100">Common founder questions</h2>
-        <div className="mt-6 space-y-3">
-          {faqs.map((faq) => (
-            <details key={faq.question} className="rounded-xl border border-slate-800 bg-slate-900/70 p-4">
-              <summary className="cursor-pointer text-sm font-semibold text-slate-100">{faq.question}</summary>
-              <p className="pt-3 text-sm text-slate-300">{faq.answer}</p>
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 md:pb-20">
+          <h2 className="mb-6 text-3xl font-bold text-[#f0f6fc]">FAQ</h2>
+          <div className="space-y-3">
+            <details className="rounded-lg border border-[#30363d] bg-[#161b22]/70 p-4">
+              <summary className="cursor-pointer font-medium text-[#e6edf3]">How is this different from startup idea generators?</summary>
+              <p className="mt-2 text-sm text-[#9ca3af]">
+                Generators produce generic concepts. This database focuses on validated demand indicators, competition
+                pressure, and solo-execution constraints so you can make a defensible choice.
+              </p>
             </details>
-          ))}
-        </div>
-      </section>
+            <details className="rounded-lg border border-[#30363d] bg-[#161b22]/70 p-4">
+              <summary className="cursor-pointer font-medium text-[#e6edf3]">Do I need a team to ship these ideas?</summary>
+              <p className="mt-2 text-sm text-[#9ca3af]">
+                The catalog is optimized for technical founders building alone. You can filter by feasibility and MVP
+                timeline to avoid team-dependent concepts.
+              </p>
+            </details>
+            <details className="rounded-lg border border-[#30363d] bg-[#161b22]/70 p-4">
+              <summary className="cursor-pointer font-medium text-[#e6edf3]">How does premium access work after payment?</summary>
+              <p className="mt-2 text-sm text-[#9ca3af]">
+                Stripe checkout triggers a webhook that stores your purchase email. Enter that same email in the unlock
+                form and this browser receives a secure access cookie.
+              </p>
+            </details>
+            <details className="rounded-lg border border-[#30363d] bg-[#161b22]/70 p-4">
+              <summary className="cursor-pointer font-medium text-[#e6edf3]">Can I cancel anytime?</summary>
+              <p className="mt-2 text-sm text-[#9ca3af]">
+                Yes. Billing is managed through Stripe and you can cancel from your Stripe customer portal at any time.
+              </p>
+            </details>
+          </div>
 
-      <footer className="mx-auto mt-16 w-full max-w-6xl border-t border-slate-800 px-4 py-8 text-xs text-slate-500">
-        Built for technical founders leaving corporate roles and side-hustling developers who need validated ideas,
-        not inspiration noise.
-      </footer>
-    </main>
+          <div className="mt-8 flex items-center gap-2 rounded-lg border border-[#30363d] bg-[#161b22]/70 p-4 text-sm text-[#9ca3af]">
+            <ShieldCheck className="h-4 w-4 text-[#79c0ff]" />
+            {hasAccess
+              ? "Premium access is currently active on this device."
+              : "Preview mode is active. Upgrade to unlock full idea analysis and premium filtering depth."}
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

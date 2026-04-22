@@ -11,22 +11,23 @@ NICHE: saas-tools
 PRICE: $$15/mo
 
 ARCHITECTURE SPEC:
-A Next.js app with a curated database of SaaS ideas stored in a headless CMS or JSON files. Features advanced filtering, detailed idea profiles with market research data, and gated premium content behind Lemon Squeezy subscription paywall.
+A Next.js app with a curated database of SaaS ideas stored in a headless CMS or JSON files. Features advanced filtering, search, and gated premium content behind Lemon Squeezy subscription paywall.
 
 PLANNED FILES:
 - app/page.tsx
 - app/ideas/page.tsx
 - app/ideas/[slug]/page.tsx
-- app/api/webhook/route.ts
+- app/api/auth/route.ts
+- app/api/webhook/lemonsqueezy/route.ts
 - components/IdeaCard.tsx
 - components/FilterSidebar.tsx
 - components/PricingSection.tsx
 - lib/lemonsqueezy.ts
-- lib/auth.ts
+- lib/database.ts
 - data/ideas.json
 - types/index.ts
 
-DEPENDENCIES: next, tailwindcss, @lemonsqueezy/lemonsqueezy.js, next-auth, lucide-react, clsx, tailwind-merge
+DEPENDENCIES: next, react, typescript, tailwindcss, @lemonsqueezy/lemonsqueezy.js, next-auth, prisma, @prisma/client, lucide-react, fuse.js
 
 REQUIREMENTS:
 - Next.js 15 with App Router (app/ directory)
@@ -34,7 +35,7 @@ REQUIREMENTS:
 - Tailwind CSS v4
 - shadcn/ui components (npx shadcn@latest init, then add needed components)
 - Dark theme ONLY — background #0d1117, no light mode
-- Lemon Squeezy checkout overlay for payments
+- Stripe Payment Link for payments (hosted checkout — use the URL directly as the Buy button href)
 - Landing page that converts: hero, problem, solution, pricing, FAQ
 - The actual tool/feature behind a paywall (cookie-based access after purchase)
 - Mobile responsive
@@ -54,9 +55,13 @@ REQUIREMENTS:
   to package.json dependencies and re-run npm install + npm run build until it passes.
 
 ENVIRONMENT VARIABLES (create .env.example):
-- NEXT_PUBLIC_LEMON_SQUEEZY_STORE_ID
-- NEXT_PUBLIC_LEMON_SQUEEZY_PRODUCT_ID
-- LEMON_SQUEEZY_WEBHOOK_SECRET
+- NEXT_PUBLIC_STRIPE_PAYMENT_LINK  (full URL, e.g. https://buy.stripe.com/test_XXX)
+- NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY  (pk_test_... or pk_live_...)
+- STRIPE_WEBHOOK_SECRET  (set when webhook is wired)
+
+BUY BUTTON RULE: the Buy button's href MUST be `process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK`
+used as-is — do NOT construct URLs from a product ID, do NOT prepend any base URL,
+do NOT wrap it in an embed iframe. The link opens Stripe's hosted checkout directly.
 
 After creating all files:
 1. Run: npm install
